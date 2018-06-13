@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void onClickOpenAddressButton(View v) {
         // COMPLETED (5) Store an address in a String
-        String addressString = "1600 Amphitheatre Parkway, CA";
+        String addressString = "45 Upper College Rd, Kingston, RI 02881, USA";
 
         // COMPLETED (6) Use Uri.Builder with the appropriate scheme and query to form the Uri for the address
         Uri.Builder builder = new Uri.Builder();
@@ -133,14 +133,14 @@ public class MainActivity extends AppCompatActivity {
          * Again, we create an Intent with the action, ACTION_VIEW because we want to VIEW the
          * contents of this Uri.
          */
-        Intent intent = new Intent(Intent.ACTION_VIEW);
+        Intent intent = new Intent(Intent.ACTION_VIEW,geoLocation);
 
         // COMPLETED (3) Set the data of the Intent to the Uri passed into this method
         /*
          * Using setData to set the Uri of this Intent has the exact same affect as passing it in
          * the Intent's constructor. This is simply an alternate way of doing this.
          */
-        intent.setData(geoLocation);
+        //intent.setData(geoLocation);
 
 
         // COMPLETED (4) Verify that this Intent can be launched and then call startActivity

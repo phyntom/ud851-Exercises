@@ -1,18 +1,18 @@
 /*
-* Copyright (C) 2016 The Android Open Source Project
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*      http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Copyright (C) 2016 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.example.android.todolist;
 
@@ -27,6 +27,9 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
 import com.example.android.todolist.database.AppDatabase;
+import com.example.android.todolist.database.TaskEntry;
+
+import java.util.List;
 
 import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 
@@ -35,8 +38,10 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.ItemC
 
     // Constant for logging
     private static final String TAG = MainActivity.class.getSimpleName();
+
     // Member variables for the adapter and RecyclerView
     private RecyclerView mRecyclerView;
+
     private TaskAdapter mAdapter;
 
     private AppDatabase mDb;
@@ -105,13 +110,24 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.ItemC
     @Override
     protected void onResume() {
         super.onResume();
-        // TODO (5) Get the diskIO Executor from the instance of AppExecutors and
+        // COMPLETED (5) Get the diskIO Executor from the instance of AppExecutors and
         // call the diskIO execute method with a new Runnable and implement its run method
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    final List<TaskEntry> tasks = mDb.taskDao().loadAllTasks();
 
-        // TODO (6) Move the logic into the run method and
+                    @Override
+                    public void run() {
+                        mAdapter.setTasks(tasks);
+                    }
+                });
+            }
+        });
+        // COMPLETED (6) Move the logic into the run method and
         // extract the list of tasks to a final variable
-        // TODO (7) Wrap the setTask call in a call to runOnUiThread
-        mAdapter.setTasks(mDb.taskDao().loadAllTasks());
+        // COMPLETED (7) Wrap the setTask call in a call to runOnUiThread
     }
 
     @Override

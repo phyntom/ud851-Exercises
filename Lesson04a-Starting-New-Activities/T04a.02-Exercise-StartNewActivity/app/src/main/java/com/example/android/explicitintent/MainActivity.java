@@ -16,6 +16,7 @@
 package com.example.android.explicitintent;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     /* Fields that will store our EditText and Button */
     private EditText mNameEntry;
+
     private Button mDoSomethingCoolButton;
 
     @Override
@@ -61,13 +63,16 @@ public class MainActivity extends AppCompatActivity {
                  */
                 Context context = MainActivity.this;
 
-                // TODO (1) Store ChildActivity.class in a Class object called destinationActivity
+                // COMPLETED (1) Store ChildActivity.class in a Class object called destinationActivity
 
-                // TODO (2) Create an Intent to start ChildActivity
+                Class destinationActivity = ChildActivity.class;
 
-                // TODO (3) Replace the Toast with code to start ChildActivity
-                String message = "Button clicked!\nTODO: Start a new Activity and pass some data.";
-                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                // COMPLETED (2) Create an Intent to start ChildActivity
+
+                Intent childActivityIntent= new Intent(context,destinationActivity);
+
+                // COMPLETED (3) Replace the Toast with code to start ChildActivity
+                startActivity(childActivityIntent);
 
             }
         });
